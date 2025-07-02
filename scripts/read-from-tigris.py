@@ -1,8 +1,22 @@
 import os
 import tigris
 
-from datasets import load_dataset
-from dotenv import load_dotenv
+from datasets import load_from_disk
+
+
+def remove_blue(row):
+    """
+    You can do any filtering or transformation here. This example transformation
+    removes any conversations that mention the color "blue" so you can understand
+    how to do advanced filtering or processing.
+    """
+    assert row['conversations'] is not None
+    for conv in row['conversations']:
+        assert conv['value'] is not None
+        if "blue" in conv['value']:
+            return False # remove the row
+
+    return True # leave the row in
 
 
 def main():
@@ -16,7 +30,11 @@ def main():
 
     assert fs.exists(f"/{bucket_name}/datasets/{dataset_name}"), f"{dataset_name} does not exist in {bucket_name}, have you run import-to-tigris.py?"
 
-    dataset = load_dataset(f"s3://{bucket_name}/datasets/{dataset_name}", storage_options=storage_options)
+    dataset = load_from_disk(f"s3://{bucket_name}/datasets/{dataset_name}", storage_options=storage_options)
 
-    # do something with the dataset
+    filtered_ds = dataset.filter(remove_blue)
+    filtered_ds.save_to_disk(f"s3://{bucket_name}/no-blue/{dataset_name}", storage_options=storage_options)
 
+
+if __name__ == "__main__":
+    main()

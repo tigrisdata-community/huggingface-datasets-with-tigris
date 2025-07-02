@@ -23,11 +23,6 @@
 			"type": "bind",
 			"source": "${localEnv:HOME}${localEnv:USERPROFILE}/.aws",
 			"target": "/home/vscode/.aws"
-		},
-		{
-			"type": "bind",
-			"source": "${localEnv:HOME}${localEnv:USERPROFILE}/.ssh",
-			"target": "${localEnv:HOME}${localEnv:USERPROFILE}/.ssh,readonly"
 		}
 	],
 	"postCreateCommand": "uv python install && uv venv && uv sync",
