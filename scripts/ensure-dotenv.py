@@ -16,3 +16,5 @@ for key in [
     "DATASET_NAME",
 ]:
     assert os.getenv(key) is not None, f"Environment variable {key} is not defined, please define it in .env"
+
+print("Your .env file is good to go!")

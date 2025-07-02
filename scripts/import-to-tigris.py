@@ -17,6 +17,8 @@ def main():
     dataset = load_dataset(dataset_name, split="train")
     dataset.save_to_disk(f"s3://{bucket_name}/datasets/{dataset_name}", storage_options=storage_options)
 
+    print(f"Your dataset {dataset_name} is now in Tigris at {bucket_name}/datasets/{dataset_name}")
+
 
 if __name__ == "__main__":
     main()

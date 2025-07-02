@@ -35,6 +35,8 @@ def main():
     filtered_ds = dataset.filter(remove_blue)
     filtered_ds.save_to_disk(f"s3://{bucket_name}/no-blue/{dataset_name}", storage_options=storage_options)
 
+    print(f"Your dataset {dataset_name} is now in Tigris at {bucket_name}/no-blue/{dataset_name} sans mentions of the colour blue")
+
 
 if __name__ == "__main__":
     main()
